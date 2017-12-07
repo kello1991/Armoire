@@ -6,12 +6,17 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ExamsDate.ExamsDateController">
+<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #E4E4E4;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ExamsDate.ExamsDateController">
    <children>
-      <Text layoutX="384.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste Des Examens" wrappingWidth="350.7294921875" />
+      <Text fill="#292929" layoutX="312.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste Des Examens" wrappingWidth="276.9999989271164">
+         <font>
+            <Font name="Waree Bold" size="21.0" />
+         </font></Text>
       <ScrollPane layoutX="5.0" layoutY="148.0" prefHeight="438.0" prefWidth="886.0">
          <content>
             <GridPane fx:id="gridpane">
@@ -23,9 +28,25 @@
             </GridPane>
          </content>
       </ScrollPane>
-      <Label layoutX="26.0" layoutY="95.0" prefHeight="26.0" prefWidth="90.0" text="Recherche" />
-      <Button fx:id="clear" layoutX="723.0" layoutY="95.0" mnemonicParsing="false" onAction="#clear" prefHeight="26.0" prefWidth="168.0" text="Tous Les Examens" />
-      <Label layoutX="163.0" layoutY="61.0" prefHeight="26.0" prefWidth="237.0" text="Recherche Par Date" />
-      <DatePicker fx:id="datePiker" layoutX="155.0" layoutY="95.0" />
+      <Pane layoutY="60.0" prefHeight="72.0" prefWidth="900.0" style="-fx-background-color: #2F2F2F; -fx-background-radius: 50;">
+         <children>
+            <Label layoutX="14.0" layoutY="22.0" prefHeight="28.0" prefWidth="102.0" text="Recherche" textFill="#e74c3c">
+               <font>
+                  <Font name="Waree Bold" size="16.0" />
+               </font>
+            </Label>
+            <Button fx:id="clear" layoutX="718.0" layoutY="23.0" mnemonicParsing="false" onAction="#clear" prefHeight="26.0" prefWidth="168.0" style="-fx-background-color: #F9F9F9; -fx-background-radius: 50;" text="Tous Les Examens" textFill="#e74c3c">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Label layoutX="155.0" prefHeight="28.0" prefWidth="184.0" text="Recherche Par Date" textFill="#e74c3c">
+               <font>
+                  <Font name="Waree Bold" size="16.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="datePiker" layoutX="155.0" layoutY="37.0" style="-fx-background-color: #F9F9F9; -fx-background-radius: 50;" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
