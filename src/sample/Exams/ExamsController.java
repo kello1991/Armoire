@@ -3,6 +3,7 @@ package sample.Exams;
 import Dao.ExamenDao;
 import Entity.Examen;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,8 +11,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import javafx.util.Callback;
+
 
 import java.net.URL;
 import java.util.List;
@@ -24,11 +25,20 @@ public class ExamsController implements Initializable {
     @FXML
     private GridPane gridpane;
 
-    @FXML
-    private GridPane gridpane1;
-
-
     ExamenDao examenDao = new ExamenDao();
+
+
+
+
+    @FXML
+    private ComboBox<Examen> classCombo;
+
+    @FXML
+    private ComboBox<Examen> moduleCombo;
+
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -36,8 +46,15 @@ public class ExamsController implements Initializable {
         gridpane.setVgap(120);
         gridpane.setHgap(5);
         gridpane.setPadding(new Insets(60,0,0,0));
-        fillData();
 
+
+
+        fillData();
+        fillComboClass();
+        fillComboModule();
+
+        classCombo.getSelectionModel().selectedIndexProperty().addListener(observable -> System.out.println( classCombo.getSelectionModel().getSelectedItem()));
+        moduleCombo.getSelectionModel().selectedItemProperty().addListener(observable -> System.out.println( moduleCombo.getSelectionModel().getSelectedItem()));
 
     }
 
@@ -132,4 +149,66 @@ public class ExamsController implements Initializable {
       return dialog;
     }
 
+
+
+    private void fillComboClass(){
+
+        classCombo.getItems().setAll(examenDao.getExams());
+        classCombo.setButtonCell(new ExamenClassListCell());
+
+        classCombo.setCellFactory(new Callback<ListView<Examen>, ListCell<Examen>>() {
+
+            @Override
+            public ListCell<Examen> call(ListView<Examen> listView) {
+                return new ExamenClassListCell();
+            }
+        });
+    }
+
+    private void fillComboModule(){
+
+        moduleCombo.getItems().setAll(examenDao.getExams());
+        moduleCombo.setButtonCell(new ExaamenModuleListCell());
+        moduleCombo.setCellFactory(new Callback<ListView<Examen>, ListCell<Examen>>() {
+
+            @Override
+            public ListCell<Examen> call(ListView<Examen> listView) {
+                return new ExaamenModuleListCell();
+            }
+        });
+    }
+
+
+
+
+
+}
+
+
+class ExamenClassListCell extends ListCell<Examen> {
+
+    @Override
+    protected void updateItem(Examen item, boolean empty) {
+        super.updateItem(item, empty);
+        setText(null);
+        if (!empty && item != null) {
+            final String text = String.format("%s", item.getClasss());
+            setText(text);
+        }
+    }
+
+
+}
+
+class ExaamenModuleListCell extends ListCell<Examen> {
+
+    @Override
+    protected void updateItem(Examen item, boolean empty) {
+        super.updateItem(item, empty);
+        setText(null);
+        if (!empty && item != null) {
+            final String text = String.format("%s", item.getModule());
+            setText(text);
+        }
+    }
 }
