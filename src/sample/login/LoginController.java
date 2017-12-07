@@ -48,7 +48,7 @@ public class LoginController {
             Stage stage = new Stage();
             stage.setTitle("Liste Des Examens");
             AnchorPane myPane = null;
-            myPane = FXMLLoader.load(getClass().getResource("../Exams/Exams.fxml"));
+            myPane = FXMLLoader.load(getClass().getResource("../ExamsDate/ExamsDate.fxml"));
             Scene scene = new Scene(myPane);
             stage.setScene(scene);
             stage.show();

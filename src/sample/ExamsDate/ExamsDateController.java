@@ -1,45 +1,38 @@
-package sample.Exams;
+package sample.ExamsDate;
 
 import Dao.ExamenDao;
 import Entity.Examen;
-
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
-
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ExamsController implements Initializable {
+public class ExamsDateController implements Initializable {
 
     @FXML
     private AnchorPane anchorPane;
     @FXML
     private GridPane gridpane;
 
-    ExamenDao examenDao = new ExamenDao();
-
-
-
+    private final ExamenDao examenDao = new ExamenDao();
 
     @FXML
-    private ComboBox<Examen> classCombo;
-
-    @FXML
-    private ComboBox<Examen> moduleCombo;
-
-
+    private DatePicker datePiker ;
 
 
     @Override
@@ -48,18 +41,13 @@ public class ExamsController implements Initializable {
 
         //initial fill data
         fillData(examenDao.getExams());
-        //fill combobox
-        fillComboClass();
-        fillComboModule();
-        classCombo
-                .getSelectionModel()
-                .selectedItemProperty().
-                addListener(observable -> fillData(examenDao.getExamsByClass(classCombo.getSelectionModel().getSelectedItem().getClasss())));
+        datePiker.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observableValue, LocalDate localDate, LocalDate t1) {
+                fillData(examenDao.getExamsByDate(Date.valueOf( t1 )));
 
-        moduleCombo
-                .getSelectionModel()
-                .selectedItemProperty().
-                addListener(observable ->fillData(examenDao.getExamsByModule(moduleCombo.getSelectionModel().getSelectedItem().getModule())));
+            }
+        });
 
     }
 
@@ -75,19 +63,19 @@ public class ExamsController implements Initializable {
 
 
         Button edit = new Button("Modifier");
-        edit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                createDialog(e).showAndWait();
-            }
-        });
+      //  edit.setOnMouseClicked(new EventHandler<MouseEvent>() {
+      //    @Override
+      //  public void handle(MouseEvent mouseEvent) {
+      //          createDialog(e).showAndWait();
+      //}
+      // });
         Button add = new Button("Ajouter");
-        add.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                createDialog(e).showAndWait();
-            }
-        });
+        //add.setOnMouseClicked(new EventHandler<MouseEvent>() {
+         //   @Override
+          //  public void handle(MouseEvent mouseEvent) {
+        //        createDialog(e).showAndWait();
+           // }
+       // });
 
 
         GridPane grid = new GridPane();
@@ -172,32 +160,6 @@ public class ExamsController implements Initializable {
       return dialog;
     }
 
-    private void fillComboClass(){
-
-        classCombo.getItems().setAll(examenDao.getExams());
-        classCombo.setButtonCell(new ExamenClassListCell());
-
-        classCombo.setCellFactory(new Callback<ListView<Examen>, ListCell<Examen>>() {
-
-            @Override
-            public ListCell<Examen> call(ListView<Examen> listView) {
-                return new ExamenClassListCell();
-            }
-        });
-    }
-
-    private void fillComboModule(){
-
-        moduleCombo.getItems().setAll(examenDao.getExams());
-        moduleCombo.setButtonCell(new ExaamenModuleListCell());
-        moduleCombo.setCellFactory(new Callback<ListView<Examen>, ListCell<Examen>>() {
-
-            @Override
-            public ListCell<Examen> call(ListView<Examen> listView) {
-                return new ExaamenModuleListCell();
-            }
-        });
-    }
 
 
     @FXML
@@ -210,35 +172,4 @@ public class ExamsController implements Initializable {
 
 
 
-}
-
-
-class ExamenClassListCell extends ListCell<Examen> {
-
-    @Override
-    protected void updateItem(Examen item, boolean empty) {
-        super.updateItem(item, empty);
-        setText(null);
-        if (!empty && item != null) {
-            final String text = String.format("%s", item.getClasss());
-            setText(text);
-        }
-    }
-
-
-}
-
-
-
-class ExaamenModuleListCell extends ListCell<Examen> {
-
-    @Override
-    protected void updateItem(Examen item, boolean empty) {
-        super.updateItem(item, empty);
-        setText(null);
-        if (!empty && item != null) {
-            final String text = String.format("%s", item.getModule());
-            setText(text);
-        }
-    }
 }
