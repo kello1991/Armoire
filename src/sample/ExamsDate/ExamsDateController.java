@@ -9,16 +9,18 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.util.Callback;
+import org.joda.time.Interval;
 
 import java.net.URL;
 import java.sql.Date;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -63,21 +65,6 @@ public class ExamsDateController implements Initializable {
             });
 
 
-        Button edit = new Button("Modifier");
-      //  edit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-      //    @Override
-      //  public void handle(MouseEvent mouseEvent) {
-      //          createDialog(e).showAndWait();
-      //}
-      // });
-        Button add = new Button("Ajouter");
-        //add.setOnMouseClicked(new EventHandler<MouseEvent>() {
-         //   @Override
-          //  public void handle(MouseEvent mouseEvent) {
-        //        createDialog(e).showAndWait();
-           // }
-       // });
-
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -92,19 +79,16 @@ public class ExamsDateController implements Initializable {
         //salle
         grid.add(new Label("Salle"), 0, 2);
         grid.add(new Label(e.getSalle()), 1, 2);
-        //Responsable
-        grid.add(new Label("Responsable"), 0, 3);
+        //salle
+        grid.add(new Label("Heure Examen"), 0, 3);
+        grid.add(new Label(e.getDateHeur().toString()), 1, 3);
         grid.add(b, 1, 4);
-        if (e.getIdTag().equals("")){
-            grid.setStyle("-fx-background-color: #ff8566;");
-            grid.add(add, 0, 4);
-        }else {
-            grid.setStyle("-fx-background-color: #48643e;");
-            grid.add(edit, 0, 4);
 
-        }
 
-        grid.add(new Label(e.getResponsable()), 1, 3);
+
+        grid.setStyle("-fx-background-color: "+getColorItem(e));
+
+
         //Button
 
         return grid;
@@ -113,19 +97,20 @@ public class ExamsDateController implements Initializable {
 
     private void fillData(List<Examen> examenList){
 
-        gridpane.setVgap(120);
+        gridpane.setVgap(170);
         gridpane.setHgap(5);
-        gridpane.setPadding(new Insets(60,0,0,0));
+        gridpane.setPadding(new Insets(80,0,0,0));
         gridpane.getChildren().clear();
 
         int cols=3, colCnt = 0, rowCnt = 0;
         for (int i=0; i<examenList.size(); i++) {
-
+                if (!examenList.get(i).getIdTag().equals("")){
                 gridpane.add(getItem(examenList.get(i)), colCnt, rowCnt);
                 colCnt++;
                 if (colCnt>cols) {
                     rowCnt++;
                     colCnt=0;
+                }
                 }
         }
     }
@@ -156,12 +141,13 @@ public class ExamsDateController implements Initializable {
         //Responsable
         grid.add(new Label("Responsable"), 0, 3);
         grid.add(new Label(e.getResponsable()), 1, 3);
+        //date
+        grid.add(new Label("Date Examen"), 0, 4);
+        grid.add(new Label(e.getDateHeur().toString()), 1, 4);
         dialog.getDialogPane().setContent(grid);
 
       return dialog;
     }
-
-
 
     @FXML
     public void clear(ActionEvent event) throws Exception{
@@ -170,6 +156,35 @@ public class ExamsDateController implements Initializable {
     }
 
 
+    private long getDateLong(Date d , String s, long du){
+        String numberOnly= s.replaceAll("[^0-9]", "");
+        int hours =Integer.parseInt(numberOnly.charAt(0)+""+numberOnly.charAt(1));
+        int minutes =Integer.parseInt(numberOnly.charAt(2)+""+numberOnly.charAt(3));
+
+
+        return d.getTime()+((hours*60)+minutes+du)*60000;
+    }
+
+    private String getColorItem (Examen e){
+        Interval interval;
+        Date now = new Date(System.currentTimeMillis());
+        if (getDateLong(e.getDateHeur(),e.getHeure(),e.getDuree()) < now.getTime()  ) {
+            System.out.println("Before");
+            interval = new Interval(getDateLong(e.getDateHeur(),e.getHeure(),0),now.getTime() );
+            return "#336699";//blue
+        }
+        else {if (getDateLong(e.getDateHeur(),e.getHeure(),0) < now.getTime()   ) {
+            return "#F78F1E"; //orange
+
+        }}
+
+
+        return "#7ABA7A"; //vert
+
+
+
+
+    }
 
 
 

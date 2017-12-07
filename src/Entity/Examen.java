@@ -20,6 +20,8 @@ public class Examen {
     private Date dateHeur;
     private Date hSortie;
     private Date hRetour;
+    private String heure;
+
 
     public Examen() {
     }
@@ -96,21 +98,7 @@ public class Examen {
         this.dateHeur = dateHeur;
     }
 
-    public Date gethSortie() {
-        return hSortie;
-    }
 
-    public void sethSortie(Date hSortie) {
-        this.hSortie = hSortie;
-    }
-
-    public Date gethRetour() {
-        return hRetour;
-    }
-
-    public void sethRetour(Date hRetour) {
-        this.hRetour = hRetour;
-    }
 
     @Override
     public String toString() {
@@ -147,7 +135,11 @@ public class Examen {
     }
 
 
+    public String getHeure() {
+        return heure;
+    }
 
-
-
+    public void setHeure(String heure) {
+        this.heure = heure;
+    }
 }

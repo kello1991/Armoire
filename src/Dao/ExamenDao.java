@@ -30,9 +30,8 @@ public class ExamenDao {
                 v.setEnseignant(resultat.getString(6));
                 v.setSalle(resultat.getString(7));
                 v.setDuree(resultat.getInt(8));
-                v.sethSortie(resultat.getDate(9));
-                v.sethRetour(resultat.getDate(10));
-                v.setResponsable(resultat.getString(11));
+                v.setResponsable(resultat.getString(9));
+                v.setHeure(resultat.getString(10));
 
 
                 examenList.add(v);
@@ -62,9 +61,9 @@ public class ExamenDao {
                 v.setEnseignant(resultat.getString(6));
                 v.setSalle(resultat.getString(7));
                 v.setDuree(resultat.getInt(8));
-                v.sethSortie(resultat.getDate(9));
-                v.sethRetour(resultat.getDate(10));
-                v.setResponsable(resultat.getString(11));
+                v.setResponsable(resultat.getString(9));
+                v.setHeure(resultat.getString(10));
+
 
 
                 examenList.add(v);
@@ -95,9 +94,9 @@ public class ExamenDao {
                 v.setEnseignant(resultat.getString(6));
                 v.setSalle(resultat.getString(7));
                 v.setDuree(resultat.getInt(8));
-                v.sethSortie(resultat.getDate(9));
-                v.sethRetour(resultat.getDate(10));
-                v.setResponsable(resultat.getString(11));
+                v.setResponsable(resultat.getString(9));
+                v.setHeure(resultat.getString(10));
+
 
 
                 examenList.add(v);
@@ -128,9 +127,8 @@ public class ExamenDao {
                 v.setEnseignant(resultat.getString(6));
                 v.setSalle(resultat.getString(7));
                 v.setDuree(resultat.getInt(8));
-                v.sethSortie(resultat.getDate(9));
-                v.sethRetour(resultat.getDate(10));
-                v.setResponsable(resultat.getString(11));
+                v.setResponsable(resultat.getString(9));
+                v.setHeure(resultat.getString(10));
 
 
                 examenList.add(v);
@@ -160,9 +158,9 @@ public class ExamenDao {
                 v.setEnseignant(resultat.getString(6));
                 v.setSalle(resultat.getString(7));
                 v.setDuree(resultat.getInt(8));
-                v.sethSortie(resultat.getDate(9));
-                v.sethRetour(resultat.getDate(10));
-                v.setResponsable(resultat.getString(11));
+                v.setResponsable(resultat.getString(9));
+                v.setHeure(resultat.getString(10));
+
 
 
                 System.out.println(date);
